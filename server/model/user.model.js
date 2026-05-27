@@ -12,7 +12,14 @@ const userSchema = new Schema({
     email:{
         type: String,
         unique:true,
-        require:true
+        require:[true, "email is required"],
+        validate:{
+            validator: function (v){
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+            },
+            message: props=>`${props.value} is not a vallid Email`
+        }
+
     },
     password:{
         type: String,
